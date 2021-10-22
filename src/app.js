@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const postsRoutes = require('./routes/posts.routes');
 
 const app = express();
 
@@ -12,5 +13,7 @@ db.authenticate()
     .catch((error) => console.log(error));
 
 app.use(express.json());
+
+app.use('/posts', postsRoutes);
 
 module.exports = app;
