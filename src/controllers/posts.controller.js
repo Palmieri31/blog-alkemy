@@ -39,3 +39,27 @@ module.exports.getPostById = async (req, res, next) => {
         res.status(500).send({ message: 'An internal server error ocurred' });
     }
 }
+
+module.exports.addPost = async (req, res, next) => {
+    try {
+        const { 
+            title, 
+            content, 
+            image, 
+            categoryId, 
+            creation_date, 
+        } = req.body;
+
+        const post = await Post.create({
+            title,
+            content,
+            image,
+            categoryId,
+            creation_date,
+        });
+
+        res.status(200).json({ message: 'the post was added successfully!' });
+    } catch (error) {
+        res.status(500).send({ message: 'An internal server error ocurred' });
+    }
+}
