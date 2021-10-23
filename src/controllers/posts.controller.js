@@ -76,7 +76,13 @@ module.exports.updatePost = async (req, res, next) => {
             creation_date, 
         } = req.body;
 
-        const post = await Post.update({ 
+        const post = await Post.findOne({ where: { id } });
+        if (!post) {
+            res.status(404).json({ message: 'The requested post was not found'});
+            return;
+        }
+
+        await Post.update({ 
             title, 
             content, 
             image, 
@@ -84,15 +90,26 @@ module.exports.updatePost = async (req, res, next) => {
             creation_date, 
         },
         { where: { id } });
-        
-        if(!post) {
-            res.status(404).json({ message: 'The requested post was not found'});
-            return;
-        }
 
         res.status(200).json({ message: 'the post was updated successfully!' });
     } catch (error) {
-        console.log(error);
+        res.status(500).send({ message: 'An internal server error ocurred' });
+    }
+}
+
+module.exports.deletePost = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const post = await Post.findOne({ where: { id } });
+
+        if (!post) {
+            res.status(404).json({ message: 'The requested post was not found'});
+        }
+
+        Post.destroy( { where: { id } });
+
+        res.status(200).json({ message: 'the post was delete successfully!' });
+    } catch (error) {
         res.status(500).send({ message: 'An internal server error ocurred' });
     }
 }
