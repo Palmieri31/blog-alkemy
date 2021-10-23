@@ -17,7 +17,6 @@ module.exports.getPosts = async (req, res, next) => {
 
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
         next(error);
     }
 };
@@ -66,7 +65,6 @@ module.exports.addPost = async (req, res, next) => {
 
         res.status(200).json({ message: 'the post was added successfully!' });
     } catch (error) {
-        console.log(error);
         next(error);
     }
 }
