@@ -18,7 +18,7 @@ module.exports.getPosts = async (req, res, next) => {
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: 'An internal server error ocurred' });
+        next(error);
     }
 };
 
@@ -36,7 +36,7 @@ module.exports.getPostById = async (req, res, next) => {
         }
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send({ message: 'An internal server error ocurred' });
+        next(error);
     }
 }
 
@@ -60,7 +60,7 @@ module.exports.addPost = async (req, res, next) => {
 
         res.status(200).json({ message: 'the post was added successfully!' });
     } catch (error) {
-        res.status(500).send({ message: 'An internal server error ocurred' });
+        next(error);
     }
 }
 
@@ -93,7 +93,7 @@ module.exports.updatePost = async (req, res, next) => {
 
         res.status(200).json({ message: 'the post was updated successfully!' });
     } catch (error) {
-        res.status(500).send({ message: 'An internal server error ocurred' });
+        next(error);
     }
 }
 
@@ -110,6 +110,6 @@ module.exports.deletePost = async (req, res, next) => {
 
         res.status(200).json({ message: 'the post was delete successfully!' });
     } catch (error) {
-        res.status(500).send({ message: 'An internal server error ocurred' });
+        next(error);
     }
 }

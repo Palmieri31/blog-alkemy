@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const postsRoutes = require('./routes/posts.routes');
+const { handleErrors } = require('./middlewares/handleErrors');
 
 const app = express();
 
@@ -15,5 +16,7 @@ db.authenticate()
 app.use(express.json());
 
 app.use('/posts', postsRoutes);
+
+app.use(handleErrors);
 
 module.exports = app;
