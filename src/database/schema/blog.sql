@@ -15,7 +15,5 @@ create table posts (
     categoryId int,
     creation_date date,
     constraint pk_posts primary key(id),
-    constraint fk_posts_categories foreign key(id) references categories(id)
+    constraint fk_posts_categories foreign key(categoryId) references categories(id)
 );
-
-drop database blog;

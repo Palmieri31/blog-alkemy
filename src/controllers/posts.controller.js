@@ -50,6 +50,12 @@ module.exports.addPost = async (req, res, next) => {
             creation_date, 
         } = req.body;
 
+        const categoryFound = await Category.findOne({ where: categoryId });
+        if (!categoryFound) {
+            res.status(404).json({ message: 'The category was not found'});
+            return;
+        }
+
         const post = await Post.create({
             title,
             content,
@@ -60,6 +66,7 @@ module.exports.addPost = async (req, res, next) => {
 
         res.status(200).json({ message: 'the post was added successfully!' });
     } catch (error) {
+        console.log(error);
         next(error);
     }
 }
@@ -79,6 +86,12 @@ module.exports.updatePost = async (req, res, next) => {
         const post = await Post.findOne({ where: { id } });
         if (!post) {
             res.status(404).json({ message: 'The requested post was not found'});
+            return;
+        }
+
+        const categoryFound = await Category.findOne({ where: categoryId });
+        if (!categoryFound) {
+            res.status(404).json({ message: 'The category was not found'});
             return;
         }
 
